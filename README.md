@@ -21,9 +21,6 @@
 - **Qué hice yo:** ayude a pegar el codgo y verificar
 - **Qué verifiqué:** probé la búsqueda por ingrediente y el cambio de porciones a mano.
 
-## Limitaciones conocidas
-
-[escribilas sin adornos]
 
 ## Autor
 
