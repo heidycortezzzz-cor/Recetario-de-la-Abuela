@@ -259,16 +259,23 @@ fun HomeScreen(
 
                     Spacer(modifier = Modifier.height(14.dp))
 
-                    // 3. BUSCADOR POR INGREDIENTE DISPONIBLE
+                    // 3. BUSCADOR POR INGREDIENTE DISPONIBLE (Etiqueta visible y texto >= 16sp)
                     OutlinedTextField(
                         value = searchQuery,
                         onValueChange = { viewModel.onSearchQueryChanged(it) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .testTag("ingredient_search_input"),
+                        label = {
+                            Text(
+                                text = "Ingrediente que tenés en casa",
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        },
                         placeholder = {
                             Text(
-                                text = stringResource(R.string.search_hint),
+                                text = "Ej. huevo, limón, carne, harina...",
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         },
@@ -293,10 +300,10 @@ fun HomeScreen(
                             }
                         },
                         singleLine = true,
-                        shape = RoundedCornerShape(24.dp),
+                        shape = RoundedCornerShape(14.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = MaterialTheme.colorScheme.primary,
-                            unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.4f),
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline,
                             focusedContainerColor = MaterialTheme.colorScheme.surface,
                             unfocusedContainerColor = MaterialTheme.colorScheme.surface
                         )
@@ -380,9 +387,11 @@ fun HomeScreen(
                             textAlign = TextAlign.Center
                         )
                         Spacer(modifier = Modifier.height(20.dp))
-                        Button(
+                        OutlinedButton(
                             onClick = { viewModel.clearSearch() },
-                            modifier = Modifier.testTag("reset_search_button")
+                            modifier = Modifier
+                                .height(48.dp)
+                                .testTag("reset_search_button")
                         ) {
                             Text("Ver todas las recetas")
                         }
@@ -394,38 +403,54 @@ fun HomeScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(32.dp),
+                            .padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.MenuBook,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(64.dp)
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Surface(
+                            shape = CircleShape,
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                            modifier = Modifier.size(80.dp)
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Icon(
+                                    imageVector = Icons.Default.MenuBook,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.size(44.dp)
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(20.dp))
                         Text(
-                            text = stringResource(R.string.no_recipes_yet),
-                            style = MaterialTheme.typography.titleMedium,
+                            text = "Todavía no hay recetas",
+                            style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
                         Text(
-                            text = stringResource(R.string.no_recipes_hint),
-                            style = MaterialTheme.typography.bodyMedium,
+                            text = "Escribí la primera receta de tu abuela para guardarla por siempre.",
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center
                         )
-                        Spacer(modifier = Modifier.height(24.dp))
+                        Spacer(modifier = Modifier.height(28.dp))
                         Button(
                             onClick = onAddRecipeClick,
-                            modifier = Modifier.testTag("empty_add_recipe_button")
+                            modifier = Modifier
+                                .fillMaxWidth(0.9f)
+                                .height(52.dp)
+                                .testTag("empty_add_recipe_button")
                         ) {
-                            Icon(Icons.Default.Add, contentDescription = null)
+                            Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(20.dp))
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Guardar Primera Receta")
+                            Text(
+                                text = "Escribir la primera receta",
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = FontWeight.Bold
+                            )
                         }
                     }
                 }

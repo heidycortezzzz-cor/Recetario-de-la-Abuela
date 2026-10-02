@@ -5,30 +5,30 @@ import androidx.compose.ui.graphics.Color
 // Paleta de colores cálida y hogareña para "Recetario de la Abuela"
 // Inspirada en cocinas tradicionales de campo, cazuelas de barro y manteles familiares.
 
-// Colores principales (Terracota y Arcilla cálida)
-val TerracottaPrimary = Color(0xFFB84A28)
+// Colores principales (Terracota y Arcilla cálida de alto contraste)
+val TerracottaPrimary = Color(0xFFA13817)
 val TerracottaOnPrimary = Color(0xFFFFFFFF)
 val TerracottaContainer = Color(0xFFFFDBCF)
-val TerracottaOnContainer = Color(0xFF380C00)
+val TerracottaOnContainer = Color(0xFF2E0900)
 
 // Colores secundarios (Verde Albahaca / Romero de huerta casera)
-val BasilSecondary = Color(0xFF4E664F)
+val BasilSecondary = Color(0xFF2E5331)
 val BasilOnSecondary = Color(0xFFFFFFFF)
-val BasilContainer = Color(0xFFD0ECD0)
-val BasilOnContainer = Color(0xFF0C2010)
+val BasilContainer = Color(0xFFC7E8C8)
+val BasilOnContainer = Color(0xFF041B08)
 
 // Acentos (Miel dorada y canela)
-val HoneyTertiary = Color(0xFF8C531B)
+val HoneyTertiary = Color(0xFF7A4512)
 val HoneyContainer = Color(0xFFFFDCBE)
 
-// Fondos y Superficies (Papel de recetario antiguo / Crema suave)
-val WarmBackground = Color(0xFFFDF8F5)
-val WarmOnBackground = Color(0xFF221A16)
+// Fondos y Superficies (Alto contraste para lectura al sol)
+val WarmBackground = Color(0xFFFFFFFF)
+val WarmOnBackground = Color(0xFF120C09)
 val WarmSurface = Color(0xFFFFFFFF)
-val WarmOnSurface = Color(0xFF221A16)
-val WarmSurfaceVariant = Color(0xFFF3E1DA)
-val WarmOnSurfaceVariant = Color(0xFF52443E)
-val WarmOutline = Color(0xFF85736C)
+val WarmOnSurface = Color(0xFF120C09)
+val WarmSurfaceVariant = Color(0xFFF5E8E2)
+val WarmOnSurfaceVariant = Color(0xFF2E221D)
+val WarmOutline = Color(0xFF5C4740)
 
 // Tema oscuro complementario
 val DarkTerracottaPrimary = Color(0xFFFFB59D)

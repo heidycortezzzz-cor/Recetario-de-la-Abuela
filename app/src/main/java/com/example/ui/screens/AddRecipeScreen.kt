@@ -1,6 +1,7 @@
 package com.example.ui.screens
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -33,8 +35,10 @@ import androidx.compose.material.icons.filled.AddPhotoAlternate
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Group
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Restaurant
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -466,18 +470,17 @@ fun AddRecipeScreen(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            // Cantidad numérica
+                            // Cantidad numérica proporcional para pantallas de 320px
                             OutlinedTextField(
                                 value = item.amountText,
                                 onValueChange = {
-                                    // Acepta números y coma/punto decimal
                                     ingredients[index] = item.copy(amountText = it)
                                 },
                                 label = { Text("Cantidad") },
                                 placeholder = { Text("ej. 500") },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                                 modifier = Modifier
-                                    .width(110.dp)
+                                    .weight(0.42f)
                                     .testTag("ingredient_amount_input_$index"),
                                 singleLine = true,
                                 shape = RoundedCornerShape(8.dp)
@@ -492,9 +495,9 @@ fun AddRecipeScreen(
                                     ingredients[index] = item.copy(unit = it)
                                 },
                                 label = { Text("Unidad") },
-                                placeholder = { Text("g, tazas, etc.") },
+                                placeholder = { Text("g, ml, tazas...") },
                                 modifier = Modifier
-                                    .weight(1f)
+                                    .weight(0.58f)
                                     .testTag("ingredient_unit_input_$index"),
                                 singleLine = true,
                                 shape = RoundedCornerShape(8.dp)
@@ -513,7 +516,7 @@ fun AddRecipeScreen(
                                 FilterChip(
                                     selected = item.unit == u,
                                     onClick = { ingredients[index] = item.copy(unit = u) },
-                                    label = { Text(u, style = MaterialTheme.typography.labelSmall) }
+                                    label = { Text(u, style = MaterialTheme.typography.bodyMedium) }
                                 )
                             }
                         }
@@ -527,12 +530,13 @@ fun AddRecipeScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
+                    .heightIn(min = 48.dp)
                     .padding(top = 8.dp)
                     .testTag("add_ingredient_button")
             ) {
                 Icon(Icons.Default.Add, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Agregar otro ingrediente")
+                Text("Agregar otro ingrediente", style = MaterialTheme.typography.bodyMedium)
             }
 
             Spacer(modifier = Modifier.height(28.dp))
@@ -560,13 +564,13 @@ fun AddRecipeScreen(
                         shape = CircleShape,
                         color = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier
-                            .size(28.dp)
-                            .padding(top = 10.dp)
+                            .size(32.dp)
+                            .padding(top = 8.dp)
                     ) {
                         Box(contentAlignment = Alignment.Center) {
                             Text(
                                 text = "${index + 1}",
-                                style = MaterialTheme.typography.labelSmall,
+                                style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onSecondary
                             )
@@ -578,8 +582,8 @@ fun AddRecipeScreen(
                     OutlinedTextField(
                         value = stepText,
                         onValueChange = { steps[index] = it },
-                        label = { Text("Paso ${index + 1}") },
-                        placeholder = { Text("Describe el paso de la receta...") },
+                        label = { Text("Paso ${index + 1} de la receta") },
+                        placeholder = { Text("Describí cómo se prepara este paso...") },
                         modifier = Modifier
                             .weight(1f)
                             .testTag("step_input_$index"),
@@ -597,7 +601,7 @@ fun AddRecipeScreen(
                             Icon(
                                 imageVector = Icons.Default.Delete,
                                 contentDescription = "Quitar paso",
-                                tint = MaterialTheme.colorScheme.error.copy(alpha = 0.7f)
+                                tint = MaterialTheme.colorScheme.error
                             )
                         }
                     }
@@ -608,40 +612,53 @@ fun AddRecipeScreen(
                 onClick = { steps.add("") },
                 modifier = Modifier
                     .fillMaxWidth()
+                    .heightIn(min = 48.dp)
                     .padding(top = 8.dp)
                     .testTag("add_step_button")
             ) {
                 Icon(Icons.Default.Add, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Agregar otro paso")
+                Text("Agregar otro paso", style = MaterialTheme.typography.bodyMedium)
             }
 
             if (errorMessage != null) {
-                Spacer(modifier = Modifier.height(14.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 Surface(
                     color = MaterialTheme.colorScheme.errorContainer,
-                    shape = RoundedCornerShape(8.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.error),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = errorMessage ?: "",
-                        color = MaterialTheme.colorScheme.onErrorContainer,
-                        style = MaterialTheme.typography.bodySmall,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.padding(12.dp)
-                    )
+                    Row(
+                        modifier = Modifier.padding(14.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = "Aviso",
+                            tint = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.size(24.dp)
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = errorMessage ?: "",
+                            color = MaterialTheme.colorScheme.onErrorContainer,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.height(28.dp))
 
             // ==========================================
-            // BOTÓN PRINCIPAL DE GUARDAR RECETA
+            // BOTÓN PRINCIPAL ÚNICO DE GUARDAR RECETA
             // ==========================================
             Button(
                 onClick = {
                     if (title.isBlank()) {
-                        errorMessage = "Por favor ingresa un nombre para la receta."
+                        errorMessage = "Por favor, escribí el nombre de la receta para no olvidarla."
                         return@Button
                     }
 
@@ -654,7 +671,7 @@ fun AddRecipeScreen(
                     }
 
                     if (validIngredients.isEmpty()) {
-                        errorMessage = "Por favor ingresa al menos un ingrediente para la receta."
+                        errorMessage = "Agregá al menos un ingrediente para que la receta familiar esté completa."
                         return@Button
                     }
 
@@ -669,18 +686,16 @@ fun AddRecipeScreen(
                         samplePhotoKey = selectedSamplePhoto
                     )
 
+                    Toast.makeText(context, "¡Receta familiar guardada con éxito!", Toast.LENGTH_SHORT).show()
                     onBack()
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(54.dp)
-                    .testTag("save_recipe_button"),
-                shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                )
+                    .testTag("save_recipe_submit_button"),
+                shape = RoundedCornerShape(14.dp)
             ) {
-                Icon(Icons.Default.Restaurant, contentDescription = null)
+                Icon(Icons.Default.Save, contentDescription = null, modifier = Modifier.size(20.dp))
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Guardar en el Recetario",

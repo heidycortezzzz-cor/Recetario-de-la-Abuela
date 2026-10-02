@@ -59,4 +59,32 @@ No elimines ni cambies las funciones que ya funcionan. La nueva implementación 
 
 **Commit:** M2: Que recuerde - Persistencia permanente de recetas con porciones base y exportación a JSON
 
+## M3 · Que se entienda
+
+**Prompt textual:**
+
+```
+# M3 · Que se entienda
+
+Antes: abrí la app en tu celular y anotá los tres estorbos más grandes.
+
+Después:
+
+Ajustá la interfaz de la app con estos requisitos, sin cambiar la lógica:
+
+1. Se usa bien desde 320 px de ancho, con una sola mano y sin hacer zoom.
+2. Contraste suficiente para leerse al sol; texto nunca menor a 16 px.
+3. Todos los campos con etiqueta visible, no solo con texto de ejemplo dentro.
+4. Un solo botón principal por pantalla; los demás, secundarios.
+5. Estado vacío: qué se muestra cuando todavía no hay ningún dato, con una frase que invite a la primera acción. Por ejemplo: "Todavía no hay recetas. Escribí la primera receta de tu abuela".
+6. Mensajes de éxito y de error visibles, en español, sin palabras técnicas.
+
+Dame los cambios y decime cuál de los seis puntos NO pudiste cumplir y por qué.
+
+No cambies la lógica ni elimines las funciones existentes.
+```
+
+**Commit:** M3: Que se entienda - Accesibilidad desde 320px, alto contraste al sol, tipografía >=16px y etiquetas visibles
+
+
 
