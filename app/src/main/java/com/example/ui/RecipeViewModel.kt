@@ -159,6 +159,54 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+    /**
+     * Exporta todas las recetas actuales a formato JSON.
+     */
+    fun exportRecipesJson(onResult: (String) -> Unit) {
+        viewModelScope.launch {
+            val json = withContext(Dispatchers.IO) {
+                repository.exportAllToJson()
+            }
+            onResult(json)
+        }
+    }
+
+    /**
+     * Importa recetas desde un JSON de respaldo.
+     */
+    fun importRecipesFromJson(json: String, onDone: (Int) -> Unit) {
+        viewModelScope.launch {
+            val count = withContext(Dispatchers.IO) {
+                repository.importFromJson(json)
+            }
+            onDone(count)
+        }
+    }
+
+    /**
+     * Elimina todas las recetas del recetario.
+     */
+    fun deleteAllRecipes(onDone: () -> Unit) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.deleteAllRecipes()
+            }
+            _selectedRecipe.value = null
+            onDone()
+        }
+    }
+
+    /**
+     * Restaura las recetas tradicionales de muestra.
+     */
+    fun restoreSampleRecipes() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.ensureSampleData()
+            }
+        }
+    }
+
     companion object {
         /**
          * Normaliza texto para búsqueda: elimina mayúsculas y acentos (ej: "Limón" -> "limon").

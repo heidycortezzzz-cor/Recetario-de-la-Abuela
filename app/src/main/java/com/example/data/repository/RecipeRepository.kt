@@ -27,6 +27,27 @@ class RecipeRepository(private val recipeDao: RecipeDao) {
 
     suspend fun deleteRecipeById(id: Long) = recipeDao.deleteRecipeById(id)
 
+    suspend fun deleteAllRecipes() = recipeDao.deleteAllRecipes()
+
+    /**
+     * Exporta todas las recetas guardadas a una cadena JSON para respaldo en archivo.
+     */
+    suspend fun exportAllToJson(): String {
+        val recipes = recipeDao.getAllRecipesSnapshot()
+        return com.example.util.RecipeBackupManager.exportRecipesToJson(recipes)
+    }
+
+    /**
+     * Importa recetas desde una cadena JSON y las guarda en la base de datos local.
+     */
+    suspend fun importFromJson(jsonString: String): Int {
+        val parsed = com.example.util.RecipeBackupManager.parseRecipesFromJson(jsonString)
+        for (recipe in parsed) {
+            recipeDao.insertRecipe(recipe)
+        }
+        return parsed.size
+    }
+
     /**
      * Si el recetario está vacío, precarga 2 recetas tradicionales queridas de la abuela
      * para que el usuario pueda probar de inmediato la conversión de porciones y la búsqueda.

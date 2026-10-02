@@ -35,3 +35,28 @@ quiero registra esta version como m1: Función. agregar unicamente el texto m1 j
 
 **Commit:** m1: Función - agregar texto m1 junto al título principal
 
+## M2 · Que recuerde
+
+**Prompt textual:**
+
+```
+# M2 · Que recuerde
+
+Quiero que los datos de la app no se pierdan al cerrarla.
+
+Usá localStorage y explicame:
+
+1. Dónde queda guardada la información exactamente.
+2. Qué pasa si el usuario borra el caché o cambia de dispositivo.
+3. Cómo hago para exportar los datos a un archivo, por si quiero respaldarlos.
+
+Dame el código de guardar, leer y borrar, y un dato de ejemplo ya cargado para probar.
+
+Guardá cada receta junto con sus porciones base.
+
+No elimines ni cambies las funciones que ya funcionan. La nueva implementación debe integrarse con la aplicación existente.
+```
+
+**Commit:** M2: Que recuerde - Persistencia permanente de recetas con porciones base y exportación a JSON
+
+

@@ -41,4 +41,10 @@ interface RecipeDao {
 
     @Query("DELETE FROM recipes WHERE id = :id")
     suspend fun deleteRecipeById(id: Long)
+
+    @Query("SELECT * FROM recipes ORDER BY createdAt DESC")
+    suspend fun getAllRecipesSnapshot(): List<Recipe>
+
+    @Query("DELETE FROM recipes")
+    suspend fun deleteAllRecipes()
 }
