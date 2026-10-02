@@ -9,6 +9,8 @@ import com.example.data.model.Ingredient
 import com.example.data.model.Recipe
 import com.example.data.repository.RecipeRepository
 import com.example.util.ImageUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -121,13 +123,15 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     ) {
         viewModelScope.launch {
             val context = getApplication<Application>()
-            // Si el usuario eligió una foto de su galería, la copiamos al almacenamiento permanente
-            val resolvedPhotoPath = if (photoUri != null) {
-                ImageUtils.saveImageToInternalStorage(context, photoUri)
-            } else if (!samplePhotoKey.isNullOrBlank()) {
-                "sample:$samplePhotoKey"
-            } else {
-                null
+            // Guardamos la foto en almacenamiento interno fuera del hilo principal
+            val resolvedPhotoPath = withContext(Dispatchers.IO) {
+                if (photoUri != null) {
+                    ImageUtils.saveImageToInternalStorage(context, photoUri)
+                } else if (!samplePhotoKey.isNullOrBlank()) {
+                    "sample:$samplePhotoKey"
+                } else {
+                    null
+                }
             }
 
             val recipe = Recipe(
@@ -138,13 +142,17 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
                 photoUri = resolvedPhotoPath
             )
 
-            repository.insertRecipe(recipe)
+            withContext(Dispatchers.IO) {
+                repository.insertRecipe(recipe)
+            }
         }
     }
 
     fun deleteRecipe(recipe: Recipe) {
         viewModelScope.launch {
-            repository.deleteRecipe(recipe)
+            withContext(Dispatchers.IO) {
+                repository.deleteRecipe(recipe)
+            }
             if (_selectedRecipe.value?.id == recipe.id) {
                 _selectedRecipe.value = null
             }

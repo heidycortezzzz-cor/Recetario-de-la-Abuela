@@ -648,9 +648,7 @@ fun AddRecipeScreen(
                     val validIngredients = ingredients.mapNotNull {
                         val trimmedName = it.name.trim()
                         if (trimmedName.isNotBlank()) {
-                            // Parseo seguro de decimales reemplazando comas por puntos
-                            val cleanNumber = it.amountText.replace(',', '.').trim()
-                            val amount = cleanNumber.toDoubleOrNull() ?: 0.0
+                            val amount = com.example.util.RecipeScaler.parseAmount(it.amountText)
                             Ingredient(name = trimmedName, amount = amount, unit = it.unit.trim())
                         } else null
                     }

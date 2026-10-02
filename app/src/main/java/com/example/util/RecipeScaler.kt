@@ -26,6 +26,43 @@ object RecipeScaler {
     private val decimalFormat = DecimalFormat("#.##", DecimalFormatSymbols(Locale.US))
 
     /**
+     * Parsea un texto ingresado por el usuario de forma segura y tolerante a fallos.
+     * Soporta enteros ("500"), decimales con coma o punto ("2,5", "2.5"),
+     * fracciones simples ("1/2", "3/4") y números mixtos ("1 1/2").
+     * Si el texto está vacío o es inválido, retorna 0.0 sin lanzar excepciones.
+     */
+    fun parseAmount(text: String): Double {
+        val trimmed = text.trim()
+        if (trimmed.isEmpty()) return 0.0
+
+        // Caso número mixto: ej. "1 1/2"
+        if (trimmed.contains(' ') && trimmed.contains('/')) {
+            val spaceParts = trimmed.split("\\s+".toRegex())
+            if (spaceParts.size == 2) {
+                val whole = spaceParts[0].replace(',', '.').toDoubleOrNull() ?: 0.0
+                val frac = parseAmount(spaceParts[1])
+                return whole + frac
+            }
+        }
+
+        // Caso fracción simple: ej. "1/2" o "3/4"
+        if (trimmed.contains('/')) {
+            val fractionParts = trimmed.split('/')
+            if (fractionParts.size == 2) {
+                val numerator = fractionParts[0].trim().replace(',', '.').toDoubleOrNull()
+                val denominator = fractionParts[1].trim().replace(',', '.').toDoubleOrNull()
+                if (numerator != null && denominator != null && denominator != 0.0) {
+                    return numerator / denominator
+                }
+            }
+        }
+
+        // Caso decimal o entero estándar
+        val normalized = trimmed.replace(',', '.')
+        return normalized.toDoubleOrNull() ?: 0.0
+    }
+
+    /**
      * Calcula la nueva cantidad de un ingrediente en base a la relación de porciones.
      *
      * @param baseAmount Cantidad original en la receta base.

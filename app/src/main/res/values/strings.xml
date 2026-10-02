@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Recetario de la Abuela</string>
-    <string name="home_title">Recetario de la Abuela</string>
+    <string name="home_title">Recetario de la Abuela m1</string>
     <string name="subtitle_tagline">Las recetas familiares que nunca se olvidan</string>
     <string name="search_hint">Buscar por ingrediente (ej. huevo, harina)...</string>
     <string name="add_recipe">Nueva Receta</string>

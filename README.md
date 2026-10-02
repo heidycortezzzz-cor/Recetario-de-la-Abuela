@@ -13,6 +13,7 @@
 | Peldaño | Qué cambió | Evidencia |
 |---|---|---|
 | P0 | Versión inicial generada con IA | E0-inicial.png |
+| m1 | Función: Registro de versión m1 junto al título | E1-m1.png |
 
 ## Declaración de uso de inteligencia artificial
 

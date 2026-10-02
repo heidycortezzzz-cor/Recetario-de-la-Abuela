@@ -24,3 +24,14 @@ CRITERIO DE ACEPTACIÓN: abro la app, guardo una receta de 4 porciones, la cambi
 
 
 **Commit:** P0: primera version generada con IA
+
+## m1 · Función
+
+**Prompt textual:**
+
+```
+quiero registra esta version como m1: Función. agregar unicamente el texto m1 junto al titulo "Recetario de la Abuela" sin cambiar niguna otra funcion ni el diseño de la aplicacion
+```
+
+**Commit:** m1: Función - agregar texto m1 junto al título principal
+
