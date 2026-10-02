@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Recetario de la Abuela</string>
+    <string name="home_title">Recetario de la Abuela</string>
+    <string name="subtitle_tagline">Las recetas familiares que nunca se olvidan</string>
+    <string name="search_hint">Buscar por ingrediente (ej. huevo, harina)...</string>
+    <string name="add_recipe">Nueva Receta</string>
+    <string name="no_recipes_yet">No tienes recetas guardadas todavía.</string>
+    <string name="no_recipes_hint">¡Guarda la primera receta familiar para no perderla jamás!</string>
+    <string name="no_search_results">No se encontraron recetas con ese ingrediente.</string>
+    <string name="recipe_name">Nombre de la receta</string>
+    <string name="recipe_servings">Porciones base</string>
+    <string name="ingredients">Ingredientes</string>
+    <string name="instructions">Pasos de preparación</string>
+    <string name="save_recipe">Guardar Receta</string>
+    <string name="scale_portions">Convertir porciones</string>
+</resources>
