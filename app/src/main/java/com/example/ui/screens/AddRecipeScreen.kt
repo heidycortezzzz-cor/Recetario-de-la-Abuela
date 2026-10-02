@@ -116,6 +116,7 @@ fun AddRecipeScreen(
     var selectedPhotoUri by remember { mutableStateOf<Uri?>(null) }
     var selectedSamplePhoto by remember { mutableStateOf<String?>(null) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    var isSaving by remember { mutableStateOf(false) }
 
     // Lista mutable de ingredientes
     val ingredients = remember {
@@ -657,16 +658,18 @@ fun AddRecipeScreen(
             // ==========================================
             Button(
                 onClick = {
-                    if (title.isBlank()) {
+                    if (isSaving) return@Button
+                    val cleanTitle = title.trim().take(120)
+                    if (cleanTitle.isBlank()) {
                         errorMessage = "Por favor, escribí el nombre de la receta para no olvidarla."
                         return@Button
                     }
 
                     val validIngredients = ingredients.mapNotNull {
-                        val trimmedName = it.name.trim()
+                        val trimmedName = it.name.trim().take(80)
                         if (trimmedName.isNotBlank()) {
                             val amount = com.example.util.RecipeScaler.parseAmount(it.amountText)
-                            Ingredient(name = trimmedName, amount = amount, unit = it.unit.trim())
+                            Ingredient(name = trimmedName, amount = amount, unit = it.unit.trim().take(30))
                         } else null
                     }
 
@@ -675,11 +678,14 @@ fun AddRecipeScreen(
                         return@Button
                     }
 
-                    val validSteps = steps.map { it.trim() }.filter { it.isNotBlank() }
+                    val validSteps = steps
+                        .map { it.trim().take(800) }
+                        .filter { it.isNotBlank() }
 
+                    isSaving = true
                     viewModel.saveNewRecipe(
-                        title = title,
-                        baseServings = baseServings,
+                        title = cleanTitle,
+                        baseServings = baseServings.coerceIn(1, 99),
                         ingredients = validIngredients,
                         instructions = if (validSteps.isEmpty()) listOf("Preparar con cariño y servir caliente.") else validSteps,
                         photoUri = selectedPhotoUri,
@@ -689,6 +695,7 @@ fun AddRecipeScreen(
                     Toast.makeText(context, "¡Receta familiar guardada con éxito!", Toast.LENGTH_SHORT).show()
                     onBack()
                 },
+                enabled = !isSaving,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(54.dp)

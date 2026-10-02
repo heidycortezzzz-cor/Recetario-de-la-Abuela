@@ -86,5 +86,36 @@ No cambies la lógica ni elimines las funciones existentes.
 
 **Commit:** M3: Que se entienda - Accesibilidad desde 320px, alto contraste al sol, tipografía >=16px y etiquetas visibles
 
+## M4 · Que no se rompa
+
+**Prompt textual:**
+
+```
+# M4 · Que no se rompa
+
+Actuá como tester de software, no como programador.
+
+Dame diez formas concretas de romper esta app desde la interfaz, por ejemplo:
+
+* Campos vacíos.
+* Texto donde debería ir un número.
+* Números negativos.
+* Fechas imposibles.
+* Textos de 500 caracteres.
+* Doble clic en el botón Guardar.
+* Pérdida de conexión a mitad de una acción.
+
+Para cada una decime:
+
+1. Qué pasaría hoy.
+2. Qué debería pasar.
+3. El código mínimo que lo evita.
+
+No cambies el diseño ni agregues funciones nuevas.
+```
+
+**Commit:** M4: Que no se rompa - 10 pruebas destructivas de QA y validaciones defensivas
+
+
 
 

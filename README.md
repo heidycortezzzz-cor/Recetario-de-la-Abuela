@@ -16,6 +16,7 @@
 | m1 | Función: Registro de versión m1 junto al título | E1-m1.png |
 | M2 | Que recuerde: Persistencia local permanente en Room y exportación a respaldo JSON | E2-m2.png |
 | M3 | Que se entienda: Accesibilidad 320px, alto contraste al sol, fuentes >=16px y etiquetas visibles | E3-m3.png |
+| M4 | Que no se rompa: 10 pruebas destructivas de QA y validaciones defensivas | E4-m4.png |
 
 ## Declaración de uso de inteligencia artificial
 

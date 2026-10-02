@@ -57,9 +57,10 @@ object RecipeScaler {
             }
         }
 
-        // Caso decimal o entero estándar
+        // Caso decimal o entero estándar (asegura que números negativos no corrompan las porciones)
         val normalized = trimmed.replace(',', '.')
-        return normalized.toDoubleOrNull() ?: 0.0
+        val parsed = normalized.toDoubleOrNull() ?: 0.0
+        return maxOf(0.0, parsed)
     }
 
     /**

@@ -61,4 +61,22 @@ class ExampleUnitTest {
         assertTrue(RecipeViewModel.normalizeText(ingredient1).contains(RecipeViewModel.normalizeText(query1)))
         assertTrue(RecipeViewModel.normalizeText(ingredient2).contains(RecipeViewModel.normalizeText(query2)))
     }
+
+    @Test
+    fun testDefensiveParsing_negativeNumbersAndInvalidText() {
+        // QA Test 2: Texto donde debería ir un número
+        assertEquals(0.0, RecipeScaler.parseAmount("mucho"), 0.001)
+        assertEquals(0.0, RecipeScaler.parseAmount("abc"), 0.001)
+        assertEquals(0.0, RecipeScaler.parseAmount(""), 0.001)
+        assertEquals(0.0, RecipeScaler.parseAmount("   "), 0.001)
+
+        // QA Test 3: Números negativos (deben limitarse defensivamente a 0.0)
+        assertEquals(0.0, RecipeScaler.parseAmount("-500"), 0.001)
+        assertEquals(0.0, RecipeScaler.parseAmount("-2.5"), 0.001)
+
+        // QA Test 4: Porciones negativas o cero en escalador
+        val negativeScaled = RecipeScaler.scaleAmount(100.0, baseServings = -4, targetServings = -10)
+        assertTrue(negativeScaled >= 0.0)
+        assertTrue(negativeScaled.isFinite())
+    }
 }
